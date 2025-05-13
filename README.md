@@ -105,4 +105,4 @@ Planowane kolejne kroki:
 
 Jeśli doceniasz tę pracę i chcesz wesprzeć rozwój labu, już niedługo uruchamiam **Buy Me a Coffee!**
 
-Stay tuned!
+Stay tuned for future updates and simulations! 
