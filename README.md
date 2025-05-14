@@ -1,4 +1,6 @@
-# Budowa LABa Microsoft Defender for Endpoint (licencja P2 z O365 Business Basic)
+[Read this documentation in English (README_eng.md)](README_eng.md)
+
+# Budowa LAB Microsoft Defender for Endpoint (licencja P2 z O365 Business Basic)
 
 ## Wstęp
 
@@ -21,6 +23,9 @@ W ramach projektu stworzyłem własny tenant O365 oparty o licencje (Business Ba
 # Etap 1: Rejestracja licencji O365 Business Basic
 
 - ![Licencja Business Basic](screenshots/001_licencja_business_basic.png)
+
+[Rozpocznij darmowy 30-dniowy okres próbny Microsoft 365 Business Basic tutaj](https://www.microsoft.com/en-us/microsoft-365/business/microsoft-365-business-basic)
+
 
 ## Uwaga: Wybór modelu licencyjnego
 
