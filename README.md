@@ -106,11 +106,46 @@ Po poprawnym przypisaniu użytkownik będzie widoczny jako właściciel aktywnej
 
 # Etap 4: Oczekiwanie na propagację - cierpliwość to klucz
 
+Po przypisaniu licencji należy odczekać, aż pełna infrastruktura Microsoft Defender for Endpoint zostanie aktywowana w Twoim tenantcie.
+
+**Gdzie sprawdzać status propagacji?**
+
+- Portal administracyjny Microsoft 365 ➔ [https://admin.microsoft.com](https://admin.microsoft.com)
+- Portal zabezpieczeń Microsoft Defender ➔ [https://security.microsoft.com](https://security.microsoft.com)
+
+**Kluczowe informacje:**
+
+- W pierwszych godzinach po przypisaniu licencji portal Defender (`security.microsoft.com`) może być niepełny lub niedostępny.
+- Typowe komunikaty w tym czasie:
+  - "Hang on! We're preparing new spaces for your data and connecting them.",
+  - Błędy AxiosError 400 przy próbie przejścia do sekcji takich jak "Advanced Hunting",
+  - Brak dostępnych sekcji "Endpoints", "Incidents & Alerts", "Threat Intelligence".
+
+---
+
+**Czas propagacji:**
+
+- W moim przypadku pełna aktywacja trwała około **10-12 godzin**.
+- Pierwsze oznaki poprawnego działania pojawiły się po około **1 godzinie** (widoczność zakładek w portalu security), ale nie wszystkie funkcje były wtedy jeszcze dostępne.
+
+---
+
+**Wizualizacja:**
+
 - ![Propagacja po 60 minutach](screenshots/007_propagacja_tenanta_60min.png)
 - ![Propagacja do 24h](screenshots/008_oczekiwanie_na_propagacje_24h.png)
+- ![Główny dashboard po propagacji](screenshots/009_glowny_dashboard_po_propagacji.png)
 
-Pełna aktywacja usług w portalu **security.microsoft.com** trwała ok. **10-12 godzin**.  
-Po drodze pojawiały się błędy jak AxiosError 400 i komunikaty o przygotowywaniu danych.
+---
+
+**Podpowiedź praktyczna:**
+
+- Regularnie odświeżaj portal **security.microsoft.com** – zmiany są stopniowe.
+- Jeśli po 24 godzinach nie widzisz zakładek takich jak "Endpoints", "Advanced Hunting", "Incidents & Alerts" – sprawdź poprawność przypisanych licencji lub ponownie zaloguj się do portalu.
+
+---
+
+
 
 # Etap 5: Konfiguracja w Security.microsoft.com
 
@@ -123,25 +158,104 @@ Po kilku godzinach:
 
 # Etap 6: Onboarding maszyny Windows 11
 
+Aby móc przeprowadzić testy w środowisku Microsoft Defender for Endpoint, konieczne było przygotowanie osobnej maszyny testowej.  
+W moim przypadku środowisko zostało oparte o **Hyper-V** oraz maszynę wirtualną z systemem **Windows 11 Pro**.
+
+---
+
+## Przygotowanie maszyny Windows do labu
+
+Jeżeli nie masz jeszcze obrazu ISO z systemem Windows, możesz skorzystać z oficjalnego narzędzia Microsoft:
+
+- [Pobierz Windows 10 Media Creation Tool](https://www.microsoft.com/software-download/windows10)
+- [Pobierz Windows 11 Media Creation Tool](https://www.microsoft.com/software-download/windows11)
+
+> **Rekomendacja:** Pobierz plik ISO i utwórz własną maszynę w Hyper-V lub VirtualBox.  
+> Wybierz wersję Windows **Pro**, **Enterprise** lub **Education** — tylko te edycje w pełni wspierają funkcjonalności Defender for Endpoint (m.in. onboarding, EDR, ASR).
+
+---
+
+## Wymagania dla maszyny onboardowanej:
+
+- System operacyjny: Windows 10/11 Pro, Enterprise lub Education.
+- Minimalne wymagania sprzętowe:
+  - 2 CPU,
+  - 4 GB RAM,
+  - Dysk 60 GB+ (dla komfortu).
+- Maszyna musi mieć:
+  - Dostęp do Internetu,
+  - Możliwość uruchamiania skryptów `.cmd` (domyślne Execution Policy),
+  - Włączoną komunikację wychodzącą na serwisy Microsoft Defender.
+
+---
+
+## Kroki onboardingowe:
+
+1. Wejdź do portalu ➔ [https://security.microsoft.com](https://security.microsoft.com).
+2. Przejdź do: **Settings ➔ Endpoints ➔ Device Management ➔ Onboarding**.
+3. Wybierz metodę: **Local Script (for up to 10 devices)**.
+4. Pobierz wygenerowany pakiet onboardingowy `.zip`.
+5. Wypakuj plik i uruchom znajdujący się w nim skrypt `.cmd` jako **Administrator** na maszynie Windows 11.
+
 - ![Pobranie pakietu onboardingowego](screenshots/010_onboarding_pobranie_skryptu.png)
-- ![Test detekcji](screenshots/011_onboarding_weryfikacja_testu.png)
 
-1. Pobranie skryptu `.cmd`.
-2. Uruchomienie na maszynie **Win11-Client**.
-3. Maszyna pojawiła się w **Device Inventory**.
+> **Tip:** Skrypt automatycznie połączy urządzenie z usługą Microsoft Defender for Endpoint i zarejestruje je w portalu security.microsoft.com.
 
-> **Tip:** Defender identyfikuje maszynę po DeviceId, nie po adresie IP.
+---
+
+## Po wykonaniu skryptu:
+
+- Maszyna powinna pojawić się w sekcji ➔ **Devices ➔ Inventory** w portalu security.microsoft.com.
+- Status urządzenia powinien wskazywać `Onboarded`.
 
 - ![Widok poprawnie dodanej maszyny](screenshots/012_widok_uruchomionego_onboardingu.png)
 
+---
+
+## Dodatkowa weryfikacja:
+
+Aby upewnić się, że maszyna została poprawnie podłączona:
+
+- Przejdź do ➔ **Devices ➔ Inventory**,
+- Wyszukaj swoją maszynę po nazwie (np. `win11-client`),
+- Zweryfikuj status: `Onboarding status: Onboarded`.
+
+---
+
+## Praktyczna porada:
+
+Jeśli po 30–60 minutach maszyna nadal nie pojawia się w portalu:
+- Upewnij się, że maszyna ma aktywne połączenie z Internetem,
+- Sprawdź synchronizację czasu systemowego (błędy czasu mogą blokować komunikację z Defenderem),
+- Uruchom ponownie skrypt onboardingowy jako Administrator,
+- Opcjonalnie zrestartuj maszynę wirtualną.
+
+---
+
+
 # Etap 7: Pierwsze alerty i hunting
 
-- ![Alerty z testowej detekcji](screenshots/013_alerty_z_testowej_detekcji.png)
-- ![Advanced Hunting - widok](screenshots/014_advanced_hunting_widok.png)
+Po pomyślnym onboardowaniu maszyny do Microsoft Defender for Endpoint, kolejnym krokiem było przeprowadzenie pierwszych testów walidacyjnych.  
+Celem było upewnienie się, że:
 
-Pierwsze testy:
-- Wygenerowanie alertu "Suspicious Powershell CommandLine",
-- Dane trafiają poprawnie do **Advanced Hunting**: DeviceProcessEvents, AlertInfo, AlertEvidence itd.
+- Telemetria z maszyny trafia poprawnie do portalu,
+- Alerty bezpieczeństwa są generowane i widoczne w konsoli,
+- Dane są dostępne w sekcji **Advanced Hunting**.
+
+---
+
+## Wygenerowanie testowego alertu
+
+W celu wywołania kontrolowanego alertu, na onboardowanej maszynie Windows 11 wykonano symulację podejrzanej aktywności:
+
+- Uruchomienie polecenia **PowerShell** zawierającego nietypowe argumenty,
+- Wzorzec przypominający potencjalnie złośliwe zachowanie (np. skrypt pobierający plik).
+
+Przykładowa testowa komenda:
+
+```powershell
+powershell.exe -NoExit -ExecutionPolicy Bypass -WindowStyle Hidden $ErrorActionPreference= 'silentlycontinue';(New-Object System.Net.WebClient).DownloadFile('http://127.0.0.1/1.exe', 'C:\\test-WDATP-test\\invoice.exe');Start-Process 'C:\\test-WDATP-test\\invoice.exe'
+```
 
 # Podsumowanie
 
