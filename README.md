@@ -274,6 +274,16 @@ Planowane kolejne kroki:
 - Symulacje BYOVD (wgrywanie podatnych sterowników),
 - Budowa własnych custom detection rules.
 
+
+# Oficjalna dokumentacja i dodatkowe materiały
+
+Jeżeli chcesz zgłębić temat Microsoft Defender for Endpoint i budowy labu, polecam również oficjalne źródła:
+
+- [Microsoft Docs - Microsoft Defender for Endpoint Overview](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/microsoft-defender-endpoint?view=o365-worldwide)
+- [Microsoft Docs - Onboard Devices to Defender for Endpoint](https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/onboard-configure?view=o365-worldwide)
+- [Microsoft Docs - Advanced Hunting Overview](https://learn.microsoft.com/en-us/microsoft-365/security/defender/advanced-hunting-overview?view=o365-worldwide)
+- [Microsoft 365 Defender Learning Hub](https://learn.microsoft.com/en-us/training/modules/intro-to-microsoft-365-defender/)
+
 ---
 
 **Autor:** Krzysztof Krzymowski  
