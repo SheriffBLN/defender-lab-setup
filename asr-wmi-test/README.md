@@ -1,7 +1,7 @@
 # Testowanie reguł ASR z wykorzystaniem WMI Event Subscription
 
-##  Cel
-Test ma na celu sprawdzenie skuteczności reguł ASR (Attack Surface Reduction) w kontekście wykrywania trwałych subskrypcji WMI tworzonych przez PowerShell. Takie techniki są często wykorzystywane przez malware do utrzymania trwałości (persistence).
+## Cel
+Test ma na celu sprawdzenie skuteczności reguł ASR (Attack Surface Reduction) w kontekście wykrywania trwałych subskrypcji WMI tworzonych przez PowerShell. Tego typu subskrypcje są znaną techniką persistence, wykorzystywaną przez zaawansowanych przeciwników do utrzymania dostępu w systemie bez ingerencji w typowe mechanizmy autostartu.
 
 ##  Struktura repozytorium
 ```
@@ -18,10 +18,10 @@ Test ma na celu sprawdzenie skuteczności reguł ASR (Attack Surface Reduction) 
 │       ├── 008_usuniecie_subskrypcji_WMI.png
 │
 ├── asr-wmi-test/
-│   └── test_wmi_subscription.ps1
+│   └── README.md
 ```
 
-## Spis treści
+##  Spis treści
 - [1. Problem z uruchomieniem skryptu `.ps1`](#1-problem-z-uruchomieniem-skryptu-ps1)
 - [2. Zmiana ExecutionPolicy (tylko na czas testu)](#2-zmiana-executionpolicy-tylko-na-czas-testu)
 - [3. Poprawne wykonanie skryptu WMI Subscription](#3-poprawne-wykonanie-skryptu-wmi-subscription)
@@ -35,26 +35,26 @@ Test ma na celu sprawdzenie skuteczności reguł ASR (Attack Surface Reduction) 
 
 ### 1. Problem z uruchomieniem skryptu `.ps1`
 ![](../screenshots/ASR-WMI-test/001_blad_uruchomienia_skryptu.png)  
-System blokuje uruchamianie skryptów PowerShell z powodu polityki `ExecutionPolicy`.
+Podczas pierwszego uruchomienia testowego skryptu PowerShell pojawił się błąd wynikający z domyślnej polityki bezpieczeństwa systemu Windows. `ExecutionPolicy` na wielu systemach ustawiona jest domyślnie na `Restricted`, co uniemożliwia wykonanie nawet lokalnych skryptów `.ps1`. Jest to mechanizm zabezpieczający przed automatycznym uruchomieniem złośliwego kodu.
 
 ### 2. Zmiana ExecutionPolicy (tylko na czas testu)
 ![](../screenshots/ASR-WMI-test/002_zmiana_execution_policy.png)  
-Rozwiązanie problemu przez ustawienie:
+Aby umożliwić test, wykonano jednorazową zmianę polityki wykonania tylko dla bieżącej sesji PowerShell, bez trwałej zmiany ustawień systemowych. Dzięki temu mogliśmy uruchomić skrypt z subskrypcją WMI bez ryzyka złamania zasad organizacyjnych lub wpływu na system globalnie.
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
 ```
 
 ### 3. Poprawne wykonanie skryptu WMI Subscription
 ![](../screenshots/ASR-WMI-test/003_subskrypcja_WMI_dziala.png)  
-Subskrypcja zostaje założona i nasłuchuje na zmiany w klasie `Win32_LocalTime`.
+Skrypt tworzy filtr zdarzeń WMI, który monitoruje zmiany w klasie `Win32_LocalTime`, a następnie rejestruje konsumenta, który wykonuje polecenie `cmd.exe` przy każdym takim zdarzeniu. Całość wiązana jest przez `__FilterToConsumerBinding`, tworząc pełną subskrypcję WMI. Tego typu mechanizmy są często wykorzystywane przez malware jako technika persistence.
 
 ### 4. Wygenerowanie pliku testowego
 ![](../screenshots/ASR-WMI-test/004_plik_ASR_wygenerowany.png)  
-Zmiana czasu systemowego wyzwala zdarzenie, które tworzy plik `C:\Temp\asr_test_output.txt`.
+Po wymuszeniu zmiany czasu systemowego subskrypcja WMI została aktywowana i polecenie `cmd.exe /c echo Test_ASR` wygenerowało plik `C:\Temp\asr_test_output.txt`. Ten plik stanowi artefakt potwierdzający, że subskrypcja zadziałała poprawnie – pełni rolę sygnatury działania mechanizmu persistence.
 
 ### 5. Query do wykrywania reguł ASR
 ![](../screenshots/ASR-WMI-test/005_query_do_wyszukiwania_ASR.png)  
-Przykładowe zapytanie w Defender:
+W Defender for Endpoint można wykorzystać zapytania KQL, aby odnaleźć podejrzane działania związane z tworzeniem subskrypcji lub innymi technikami persistence. W tym przypadku filtrujemy `DeviceEvents`, szukając ciągów zawierających `Wmi` lub uruchomienia `powershell.exe` – narzędzia często używanego do tworzenia takich subskrypcji.
 ```kql
 DeviceEvents
 | where ActionType contains "Wmi" or InitiatingProcessFileName =~ "powershell.exe"
@@ -62,22 +62,22 @@ DeviceEvents
 
 ### 6. Szczegóły zdarzenia ProcessCommandLine
 ![](../screenshots/ASR-WMI-test/006_processcommandline_szczegoly.png)  
-Pełna ścieżka procesu i dane pozwalające zidentyfikować technikę persistence.
+Widoczne szczegóły komendy (`cmd.exe /c echo Test_ASR`) oraz procesów nadrzędnych (`WmiPrvSE.exe`) pozwalają jednoznacznie zidentyfikować źródło wykonania komendy. Takie informacje są kluczowe podczas analizy incydentu i potwierdzania wykorzystania techniki persistence w postaci WMI Event Consumer.
 
 ### 7. Uruchomienie reguł ASR w trybie audytu
 ![](../screenshots/ASR-WMI-test/007_uruchomienie_regul_ASR_audit.png)  
-Skrypt umożliwiający włączenie wszystkich reguł ASR w trybie "Audit":
+Przed rozpoczęciem testu wszystkie istotne reguły ASR zostały włączone w trybie audytowym, co pozwala na ich monitorowanie bez ingerencji w działanie systemu. Wartość `AuditMode` umożliwia obserwowanie potencjalnych incydentów bez ich blokowania – idealne do środowisk testowych i walidacyjnych.
 ```powershell
 Add-MpPreference -AttackSurfaceReductionRules_Ids 75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84 -AttackSurfaceReductionRules_Actions AuditMode
 ```
 
 ### 8. Usunięcie subskrypcji po teście
 ![](../screenshots/ASR-WMI-test/008_usuniecie_subskrypcji_WMI.png)  
-Subskrypcja, filtr i konsument zostali usunięci w celu czyszczenia środowiska.
+Po zakończeniu testów dobrą praktyką jest przywrócenie systemu do stanu wyjściowego. Usunięcie filtrów, konsumentów i powiązań eliminuje ryzyko niezamierzonych wywołań w przyszłości i zapewnia spójność środowiska labowego lub produkcyjnego.
 
 ---
 
-## Skrypt testowy
+##  Skrypt testowy
 Plik: `test_wmi_subscription.ps1`
 ```powershell
 $filterName = "TestFilterSimple"
@@ -104,7 +104,7 @@ $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsume
 }
 ```
 
-## Cleanup skrypt (opcjonalny)
+##  Cleanup skrypt (opcjonalny)
 ```powershell
 Get-WmiObject -Namespace root\subscription -Class __FilterToConsumerBinding | Where-Object { $_.Filter -like "*TestFilterSimple*" } | Remove-WmiObject
 Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer | Where-Object { $_.Name -eq "TestConsumerSimple" } | Remove-WmiObject
@@ -117,3 +117,4 @@ Get-WmiObject -Namespace root\subscription -Class __EventFilter | Where-Object {
 **Repozytorium:** `defender-lab-setup/asr-wmi-test/`
 
 > Test pokazuje, że nawet prosty mechanizm persistence jak WMI Subscriptions może zostać wykryty przez Defender for Endpoint przy odpowiednich ustawieniach ASR + audytu.
+````
