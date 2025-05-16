@@ -1,0 +1,1 @@
+testowanie reguł ASR
