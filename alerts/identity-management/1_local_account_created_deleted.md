@@ -1,4 +1,4 @@
-#  Alert: Wykrycie utworzenia nowego lokalnego konta użytkownika na stacji (Account Created)
+#  Alert: Wykrycie utworzenia nowego lub usunięcia lokalnego konta użytkownika na stacji (Account Created)
 
 ##  Opis
 
