@@ -3,24 +3,6 @@
 ## Cel
 Test ma na celu sprawdzenie skuteczności reguł ASR (Attack Surface Reduction) w kontekście wykrywania trwałych subskrypcji WMI tworzonych przez PowerShell. Tego typu subskrypcje są znaną techniką persistence, wykorzystywaną przez zaawansowanych przeciwników do utrzymania dostępu w systemie bez ingerencji w typowe mechanizmy autostartu.
 
-##  Struktura repozytorium
-```
-/defender-lab-setup/
-├── screenshots/
-│   └── ASR-WMI-test/
-│       ├── 001_blad_uruchomienia_skryptu.png
-│       ├── 002_zmiana_execution_policy.png
-│       ├── 003_subskrypcja_WMI_dziala.png
-│       ├── 004_plik_ASR_wygenerowany.png
-│       ├── 005_query_do_wyszukiwania_ASR.png
-│       ├── 006_processcommandline_szczegoly.png
-│       ├── 007_uruchomienie_regul_ASR_audit.png
-│       ├── 008_usuniecie_subskrypcji_WMI.png
-│
-├── asr-wmi-test/
-│   └── README.md
-```
-
 ##  Spis treści
 - [1. Problem z uruchomieniem skryptu `.ps1`](#1-problem-z-uruchomieniem-skryptu-ps1)
 - [2. Zmiana ExecutionPolicy (tylko na czas testu)](#2-zmiana-executionpolicy-tylko-na-czas-testu)
