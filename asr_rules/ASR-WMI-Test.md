@@ -96,7 +96,7 @@ Get-WmiObject -Namespace root\subscription -Class __EventFilter | Where-Object {
 ---
 
 **Autor:** Krzysztof Krzymowski  
-**Repozytorium:** `defender-lab-setup/asr-wmi-test/`
+**Repozytorium:** `defender-lab-setup/asr-rules/`
 
 > Test pokazuje, że nawet prosty mechanizm persistence jak WMI Subscriptions może zostać wykryty przez Defender for Endpoint przy odpowiednich ustawieniach ASR + audytu.
 ````
