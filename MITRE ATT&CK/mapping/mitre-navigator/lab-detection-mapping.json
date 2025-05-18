@@ -1,8 +1,8 @@
 {
     "version": "4.3",
-    "name": "Lab Detection Mapping \u2013 defender-lab-setup",
+    "name": "defender-lab-setup \u2013 MITRE Mapping",
     "domain": "mitre-enterprise",
-    "description": "Mapowanie przetestowanych regu\u0142 detekcji z repozytorium defender-lab-setup.",
+    "description": "Warstwa mapowania testowanych i planowanych regu\u0142 w labie defender-lab-setup (ASR, konta lokalne, itp.).",
     "filters": {
         "platforms": [
             "Windows"
@@ -21,37 +21,92 @@
         {
             "techniqueID": "T1546.003",
             "score": 1,
-            "comment": "ASR-WMI-Test.md"
+            "color": "#66ff66",
+            "comment": "ASR-WMI-Test.md \u2013 Persistence"
         },
         {
             "techniqueID": "T1136",
             "score": 1,
-            "comment": "1_local_account_created_deleted.md"
+            "color": "#66ff66",
+            "comment": "1_local_account_created_deleted.md \u2013 Persistence"
         },
         {
             "techniqueID": "T1098",
             "score": 1,
-            "comment": "1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
+            "color": "#66ff66",
+            "comment": "Account Manipulation \u2013 wszystkie 3 regu\u0142y"
         },
         {
             "techniqueID": "T1078",
             "score": 1,
-            "comment": "1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
-        },
-        {
-            "techniqueID": "T1069.001",
-            "score": 1,
-            "comment": "2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
+            "color": "#66ff66",
+            "comment": "Valid Accounts \u2013 regu\u0142y 1 i 2"
         },
         {
             "techniqueID": "T1087.001",
             "score": 1,
-            "comment": "3_LocalUserAccountModified.md"
+            "color": "#66ff66",
+            "comment": "3_LocalUserAccountModified.md \u2013 Discovery"
         },
         {
-            "techniqueID": "T1098",
+            "techniqueID": "T1531",
             "score": 1,
-            "comment": "3_LocalUserAccountModified.md"
+            "color": "#66ff66",
+            "comment": "Account Access Removal \u2013 kasowanie konta"
+        },
+        {
+            "techniqueID": "T1068",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Exploited drivers \u2013 Privilege Escalation"
+        },
+        {
+            "techniqueID": "T1003.001",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: LSASS credential theft \u2013 Credential Access"
+        },
+        {
+            "techniqueID": "T1204.002",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Executable from email/webmail \u2013 Execution"
+        },
+        {
+            "techniqueID": "T1059.005",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Office child processes + macros \u2013 Execution"
+        },
+        {
+            "techniqueID": "T1055.001",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Code injection \u2013 Defense Evasion"
+        },
+        {
+            "techniqueID": "T1059.001",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Office comm apps \u2013 Execution"
+        },
+        {
+            "techniqueID": "T1027",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Obfuscated scripts \u2013 Defense Evasion"
+        },
+        {
+            "techniqueID": "T1486",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: Anti-ransomware \u2013 Impact"
+        },
+        {
+            "techniqueID": "T1555.003",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "ASR: SMB credential theft \u2013 Credential Access"
         }
     ],
     "gradient": {
@@ -66,6 +121,10 @@
         {
             "label": "Przetestowana i wykrywana regu\u0142a (z alertem)",
             "color": "#66ff66"
+        },
+        {
+            "label": "ASR w trybie audit (jeszcze nieprzetestowana)",
+            "color": "#ffff66"
         }
     ],
     "metadata": [
@@ -74,7 +133,7 @@
             "value": "2025-05-18"
         },
         {
-            "name": "Author",
+            "name": "Krzysztof Krzymowski",
             "value": "defender-lab-setup"
         }
     ]
