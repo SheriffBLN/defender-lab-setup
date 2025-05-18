@@ -1,4 +1,4 @@
-# MITRE ATT&CK Navigator Mapping (COMBINED – Technik + Podtechnik)
+# MITRE ATT&CK Navigator Mapping (TTP)
 
 ## Plik: `lab-detection-mapping-COMBINED.json`
 
