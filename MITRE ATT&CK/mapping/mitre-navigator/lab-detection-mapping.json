@@ -1,8 +1,8 @@
 {
     "version": "4.3",
-    "name": "defender-lab-setup \u2013 MITRE Mapping",
+    "name": "defender-lab-setup \u2013 MITRE Mapping (Full Labels)",
     "domain": "mitre-enterprise",
-    "description": "Warstwa mapowania testowanych i planowanych regu\u0142 w labie defender-lab-setup (ASR, konta lokalne, itp.).",
+    "description": "Mapowanie testowanych i audytowanych regu\u0142 w labie defender-lab-setup z pe\u0142nymi etykietami.",
     "filters": {
         "platforms": [
             "Windows"
@@ -34,13 +34,13 @@
             "techniqueID": "T1098",
             "score": 1,
             "color": "#66ff66",
-            "comment": "Account Manipulation \u2013 wszystkie 3 regu\u0142y"
+            "comment": "Account Manipulation \u2013 1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md, 3_LocalUserAccountModified.md"
         },
         {
             "techniqueID": "T1078",
             "score": 1,
             "color": "#66ff66",
-            "comment": "Valid Accounts \u2013 regu\u0142y 1 i 2"
+            "comment": "Valid Accounts \u2013 1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
         },
         {
             "techniqueID": "T1087.001",
@@ -52,61 +52,61 @@
             "techniqueID": "T1531",
             "score": 1,
             "color": "#66ff66",
-            "comment": "Account Access Removal \u2013 kasowanie konta"
+            "comment": "Account Access Removal \u2013 1_local_account_created_deleted.md"
         },
         {
             "techniqueID": "T1068",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Exploited drivers \u2013 Privilege Escalation"
+            "comment": "ASR (audit): Block abuse of exploited vulnerable signed drivers"
         },
         {
             "techniqueID": "T1003.001",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: LSASS credential theft \u2013 Credential Access"
+            "comment": "ASR (audit): Block credential stealing from LSASS"
         },
         {
             "techniqueID": "T1204.002",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Executable from email/webmail \u2013 Execution"
+            "comment": "ASR (audit): Block executable content from email and webmail"
         },
         {
             "techniqueID": "T1059.005",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Office child processes + macros \u2013 Execution"
+            "comment": "ASR (audit): Block Office child processes / Win32 API macros"
         },
         {
             "techniqueID": "T1055.001",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Code injection \u2013 Defense Evasion"
+            "comment": "ASR (audit): Block Office apps from injecting code"
         },
         {
             "techniqueID": "T1059.001",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Office comm apps \u2013 Execution"
+            "comment": "ASR (audit): Block Office communication app"
         },
         {
             "techniqueID": "T1027",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Obfuscated scripts \u2013 Defense Evasion"
+            "comment": "ASR (audit): Block obfuscated scripts"
         },
         {
             "techniqueID": "T1486",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: Anti-ransomware \u2013 Impact"
+            "comment": "ASR (audit): Advanced protection against ransomware"
         },
         {
             "techniqueID": "T1555.003",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR: SMB credential theft \u2013 Credential Access"
+            "comment": "ASR (audit): Block credential stealing via SMB"
         }
     ],
     "gradient": {
