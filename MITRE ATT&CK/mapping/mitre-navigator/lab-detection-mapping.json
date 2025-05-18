@@ -1,8 +1,8 @@
 {
     "version": "4.3",
-    "name": "defender-lab-setup \u2013 MITRE Mapping (Full Labels)",
+    "name": "defender-lab-setup \u2013 Full Mapping (with Main + Sub-techniques)",
     "domain": "mitre-enterprise",
-    "description": "Mapowanie testowanych i audytowanych regu\u0142 w labie defender-lab-setup z pe\u0142nymi etykietami.",
+    "description": "Mapa ATT&CK z pe\u0142nymi technikami i podtechnikami \u2013 poprawiona klasyfikacja i widoczno\u015b\u0107.",
     "filters": {
         "platforms": [
             "Windows"
@@ -28,7 +28,13 @@
             "techniqueID": "T1136",
             "score": 1,
             "color": "#66ff66",
-            "comment": "1_local_account_created_deleted.md \u2013 Persistence"
+            "comment": "Create Account \u2013 Parent of T1136.001"
+        },
+        {
+            "techniqueID": "T1136.001",
+            "score": 1,
+            "color": "#66ff66",
+            "comment": "1_local_account_created_deleted.md \u2013 Local Account"
         },
         {
             "techniqueID": "T1098",
@@ -43,12 +49,6 @@
             "comment": "Valid Accounts \u2013 1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
         },
         {
-            "techniqueID": "T1087.001",
-            "score": 1,
-            "color": "#66ff66",
-            "comment": "3_LocalUserAccountModified.md \u2013 Discovery"
-        },
-        {
             "techniqueID": "T1531",
             "score": 1,
             "color": "#66ff66",
@@ -61,10 +61,22 @@
             "comment": "ASR (audit): Block abuse of exploited vulnerable signed drivers"
         },
         {
+            "techniqueID": "T1003",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "Credential Dumping \u2013 Parent of T1003.001"
+        },
+        {
             "techniqueID": "T1003.001",
             "score": 0.5,
             "color": "#ffff66",
             "comment": "ASR (audit): Block credential stealing from LSASS"
+        },
+        {
+            "techniqueID": "T1204",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "User Execution \u2013 Parent of T1204.002"
         },
         {
             "techniqueID": "T1204.002",
@@ -73,10 +85,16 @@
             "comment": "ASR (audit): Block executable content from email and webmail"
         },
         {
+            "techniqueID": "T1059",
+            "score": 0.5,
+            "color": "#ffff66",
+            "comment": "Command and Scripting Interpreter \u2013 Parent of T1059.001 & T1059.005"
+        },
+        {
             "techniqueID": "T1059.005",
             "score": 0.5,
             "color": "#ffff66",
-            "comment": "ASR (audit): Block Office child processes / Win32 API macros"
+            "comment": "ASR (audit): Block Office child processes / macros"
         },
         {
             "techniqueID": "T1055.001",
