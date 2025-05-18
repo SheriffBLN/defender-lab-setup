@@ -1,0 +1,81 @@
+{
+    "version": "4.3",
+    "name": "Lab Detection Mapping \u2013 defender-lab-setup",
+    "domain": "mitre-enterprise",
+    "description": "Mapowanie przetestowanych regu\u0142 detekcji z repozytorium defender-lab-setup.",
+    "filters": {
+        "platforms": [
+            "Windows"
+        ]
+    },
+    "sorting": 0,
+    "layout": {
+        "layout": "side",
+        "showID": true,
+        "showName": true,
+        "aggregateFunction": "average",
+        "countUnscored": false
+    },
+    "hideDisabled": false,
+    "techniques": [
+        {
+            "techniqueID": "T1546.003",
+            "score": 1,
+            "comment": "ASR-WMI-Test.md"
+        },
+        {
+            "techniqueID": "T1136",
+            "score": 1,
+            "comment": "1_local_account_created_deleted.md"
+        },
+        {
+            "techniqueID": "T1098",
+            "score": 1,
+            "comment": "1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
+        },
+        {
+            "techniqueID": "T1078",
+            "score": 1,
+            "comment": "1_local_account_created_deleted.md, 2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
+        },
+        {
+            "techniqueID": "T1069.001",
+            "score": 1,
+            "comment": "2_UserAccountAddedToLocalGroup_RemovedFromLocalGroup.md"
+        },
+        {
+            "techniqueID": "T1087.001",
+            "score": 1,
+            "comment": "3_LocalUserAccountModified.md"
+        },
+        {
+            "techniqueID": "T1098",
+            "score": 1,
+            "comment": "3_LocalUserAccountModified.md"
+        }
+    ],
+    "gradient": {
+        "colors": [
+            "#ffffff",
+            "#66ff66"
+        ],
+        "minValue": 0,
+        "maxValue": 1
+    },
+    "legendItems": [
+        {
+            "label": "Przetestowana i wykrywana regu\u0142a (z alertem)",
+            "color": "#66ff66"
+        }
+    ],
+    "metadata": [
+        {
+            "name": "Last updated",
+            "value": "2025-05-18"
+        },
+        {
+            "name": "Author",
+            "value": "defender-lab-setup"
+        }
+    ]
+}
